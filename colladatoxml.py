@@ -31,16 +31,21 @@ def colladatoxml():
 	import xml.etree.ElementTree as ET
 	create_root = ET.Element("environment")
 
-	for i in xrange(1,19):
-		tree = ET.parse('environment/env_'+str(i)+'_context_1.dae')
-		root = tree.getroot()
-		for child in root[1][0]:
-			doc = ET.SubElement(create_root, "object")
-			ET.SubElement(doc, "name").text=child.attrib['name']
-			ET.SubElement(doc, "position").text=(child[0].text).replace(" ", ", ")
-			ET.SubElement(doc, "rotation").text=quaternionToEuler(child[1].text) 
+	# for i in xrange(1,19):
+		# print i
+	i=100
+	tree = ET.parse('environment/env_'+str(i)+'_context_1.dae')
+	root = tree.getroot()
+	for child in root[1][0]:
+		doc = ET.SubElement(create_root, "object")
+		ET.SubElement(doc, "name").text=child.attrib['name']
+		# print child.attrib['name']
+		ET.SubElement(doc, "position").text=(child[0].text).replace(" ", ", ")
+		ET.SubElement(doc, "rotation").text=quaternionToEuler(child[1].text) 
 		tree = ET.ElementTree(create_root)
-		tree.write("/tmd_env/livingRoom"+str(i)+".xml")	
+	tree.write("tmd_env/livingRoom"+str(i)+".xml")	
+	create_root.clear()
+	print 'environment generated: livingRoom'+str(i)+".xml"
 
 
 if __name__ == '__main__':

@@ -1,6 +1,9 @@
 <<<<<<< HEAD
 environment/*
 tmd_env/*
+contextGraph/*
+contextGraph_backup/*
+environment_backup/*
 
 =======
 # Byte-compiled / optimized / DLL files
