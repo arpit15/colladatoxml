@@ -1,3 +1,5 @@
+import xml.etree.ElementTree as ET
+
 def quaternionToEuler(string):
 	from math import radians, sqrt, pi, atan2, asin
 	tmp = string.split(" ")
@@ -27,14 +29,10 @@ def quaternionToEuler(string):
 	# print euler
 	return euler
 
-def colladatoxml():
-	import xml.etree.ElementTree as ET
+def colladatoxml(filename):
+	
 	create_root = ET.Element("environment")
-
-	# for i in xrange(1,19):
-		# print i
-	i=100
-	tree = ET.parse('environment/env_'+str(i)+'_context_1.dae')
+	tree = ET.parse(filename)
 	root = tree.getroot()
 	for child in root[1][0]:
 		doc = ET.SubElement(create_root, "object")
@@ -43,12 +41,16 @@ def colladatoxml():
 		ET.SubElement(doc, "position").text=(child[0].text).replace(" ", ", ")
 		ET.SubElement(doc, "rotation").text=quaternionToEuler(child[1].text) 
 		tree = ET.ElementTree(create_root)
-	tree.write("tmd_env/livingRoom"+str(i)+".xml")	
-	create_root.clear()
-	print 'environment generated: livingRoom'+str(i)+".xml"
-
+	return tree
+	
 
 if __name__ == '__main__':
-	colladatoxml()
+	# for i in xrange(1,19):
+	i=101
+	print i
+	filename = 'environment/env_'+str(i)+'_context_1.dae'
+	tree = colladatoxml(filename)
+	tree.write("tmd_env/livingRoom"+str(i)+".xml")	
+	print 'environment generated: livingRoom'+str(i)+".dae"
 	# quaternionToEuler("0 0 -1 89.99999999999999")
 	# print pi

@@ -21,23 +21,26 @@ def repl(matchobj):
     else:
     	return matchobj.group(0)
 
-def format_tmd():
-	# with open("objects.txt","w") as obj:
-	for i in xrange(1,16):
-		print i
-		filename = 'contextGraph/'+str(i)+'_graph_1.xml'
-		# filename = 'environment/env_'+str(i)+'_context_1.dae'
-		with open(filename, "r+") as f:
-			data = f.read()
-			format_check = re.compile(r'(?<![0-9])[A-Za-z]+-[0-9][.]?[0-9]?')
-			data = re.sub(format_check,repl,data)
-			f.seek(0)
-			f.write(data)
-			f.truncate()
-		# for item in toadd:
-  # 			obj.write("%s\n" % item)
-  # 		print toadd
+def format_tmd(filename):
+	
+	with open(filename, "r+") as f:
+		data = f.read()
+		format_check = re.compile(r'(?<![0-9])[A-Za-z]+-[0-9][.]?[0-9]?')
+		data = re.sub(format_check,repl,data)
+		f.seek(0)
+		f.write(data)
+		f.truncate()
+		
 		
 
 if __name__ == '__main__':
-	format_tmd()
+	# with open("objects.txt","w") as obj:
+    # for i in xrange(1,16):
+    i=100
+    print i
+    # filename = 'contextGraph/'+str(i)+'_graph_1.xml'
+    filename = 'environment/env_'+str(i)+'_context_1.dae'
+    format_tmd(filename)
+    # for item in toadd:
+    #     obj.write("%s\n" % item)
+    # print toadd
