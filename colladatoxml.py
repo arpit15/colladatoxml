@@ -37,20 +37,23 @@ def colladatoxml(filename):
 	for child in root[1][0]:
 		doc = ET.SubElement(create_root, "object")
 		ET.SubElement(doc, "name").text=child.attrib['name']
-		# print child.attrib['name']
 		ET.SubElement(doc, "position").text=(child[0].text).replace(" ", ", ")
 		ET.SubElement(doc, "rotation").text=quaternionToEuler(child[1].text) 
+		for state in child.findall('{http://www.collada.org/2008/03/COLLADASchema}state'):
+			tmd_state = ET.SubElement(doc, "state")
+			ET.SubElement(tmd_state, "statename").text= state.find('{http://www.collada.org/2008/03/COLLADASchema}statename').text
+			ET.SubElement(tmd_state, "statevalue").text=  state.find('{http://www.collada.org/2008/03/COLLADASchema}statevalue').text
 		tree = ET.ElementTree(create_root)
 	return tree
 	
 
 if __name__ == '__main__':
-	# for i in xrange(1,19):
-	i=101
-	print i
-	filename = 'environment/env_'+str(i)+'_context_1.dae'
-	tree = colladatoxml(filename)
-	tree.write("tmd_env/livingRoom"+str(i)+".xml")	
-	print 'environment generated: livingRoom'+str(i)+".dae"
+	for i in xrange(1,2):
+		# i=101
+		print i
+		filename = 'env_'+str(i)+'.dae'
+		tree = colladatoxml(filename)
+		tree.write("tmd_env/livingRoom"+str(i)+".xml")	
+		# print 'environment generated: livingRoom'+str(i)+".dae"
 	# quaternionToEuler("0 0 -1 89.99999999999999")
 	# print pi
